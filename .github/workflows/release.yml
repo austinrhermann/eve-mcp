@@ -10,7 +10,7 @@ permissions:
   contents: write
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # ZXPSignCmd only ships for macOS/Windows
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,14 +22,9 @@ jobs:
       - name: Build
         run: bash scripts/build.sh
       - name: Sign ZXP (self-signed)
-        continue-on-error: true
         env:
-          ZXP_CERT_COUNTRY: US
-          ZXP_CERT_PROVINCE: CA
-          ZXP_CERT_ORG: Eve
-          ZXP_CERT_NAME: com.austin.eve
           ZXP_CERT_PASSWORD: ${{ secrets.ZXP_CERT_PASSWORD || 'eve-selfsigned' }}
-        run: npx --yes zxp-sign -i dist/stage -o dist/Eve.zxp
+        run: bash scripts/sign-zxp.sh
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.v.outputs.ver }}
