@@ -1,6 +1,10 @@
 # Eve
 
-A chat-room style Claude panel for After Effects. Eve runs your own Claude Code or Codex and gives it tools to read and edit your After Effects project. macOS and Windows.
+A chat-room style Claude panel for After Effects. Eve runs your own Claude Code or Codex and gives it tools to read and edit your After Effects project. macOS and Windows.<BR>
+<img width="293" height="533" alt="eve-chat-light" src="https://github.com/user-attachments/assets/058194cd-db9f-408f-88e3-64847ae7096b" />
+<img width="293" height="533" alt="eve-chat-dark" src="https://github.com/user-attachments/assets/e603f5c5-466b-4459-ac8e-595a0a2d035e" />
+<img width="293" height="533" alt="eve-buddies-dark" src="https://github.com/user-attachments/assets/9b8f0c12-263c-49bc-85a4-f0f3b436ef6e" />
+
 
 ## Before you start
 1. Install [Claude Code](https://claude.com/claude-code) and run `claude` once to sign in, or install Codex (`npm i -g @openai/codex`) and run `codex login`. Pick the provider in Settings.
