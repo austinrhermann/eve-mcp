@@ -454,6 +454,33 @@
     const m = S.cfg.approval === 'manual';
     $('c-auto').setAttribute('aria-pressed', String(!m)); $('c-man').setAttribute('aria-pressed', String(m));
   }
+  // CEF's native <select> popup can fail to open inside After Effects panels, so selects open an in-page menu instead.
+  function wireSelects() {
+    let menu = null;
+    const close = () => { if (menu) { menu.remove(); menu = null; } };
+    const open = sel => {
+      close();
+      menu = document.createElement('div'); menu.className = 'selmenu'; menu.setAttribute('role', 'listbox');
+      Array.from(sel.options).forEach(o => {
+        const it = document.createElement('div'); it.className = 'selitem' + (o.value === sel.value ? ' on' : ''); it.setAttribute('role', 'option'); it.textContent = o.textContent;
+        it.onmousedown = e => { e.preventDefault(); e.stopPropagation(); const changed = sel.value !== o.value; sel.value = o.value; close(); sel.focus(); if (changed || o.value === '') sel.dispatchEvent(new Event('change', { bubbles: true })); };
+        menu.appendChild(it);
+      });
+      document.body.appendChild(menu);
+      const r = sel.getBoundingClientRect(), mh = Math.min(menu.scrollHeight, 240);
+      menu.style.minWidth = r.width + 'px'; menu.style.maxHeight = '240px';
+      menu.style.left = Math.max(2, Math.min(r.left, window.innerWidth - menu.offsetWidth - 2)) + 'px';
+      menu.style.top = (r.bottom + mh + 4 > window.innerHeight ? Math.max(2, r.top - mh - 2) : r.bottom + 1) + 'px';
+    };
+    document.addEventListener('mousedown', e => {
+      const sel = e.target.closest && e.target.closest('select');
+      if (!sel || sel.disabled) { if (!(e.target.closest && e.target.closest('.selmenu'))) close(); return; }
+      e.preventDefault(); sel.focus();
+      menu ? close() : open(sel);
+    }, true);
+    window.addEventListener('blur', close); window.addEventListener('resize', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
   function wireResize() {
     const inp = $('input'), split = $('split');
     inp.style.height = (S.cfg.inputHeight || 62) + 'px';
@@ -468,7 +495,7 @@
     split.onkeydown = e => { if (e.key === 'ArrowUp') { e.preventDefault(); setH(inp.offsetHeight + 16); saveCfg(); } if (e.key === 'ArrowDown') { e.preventDefault(); setH(inp.offsetHeight - 16); saveCfg(); } };
   }
   function wire() {
-    wireResize();
+    wireResize(); wireSelects();
     $('c-auto').onclick = () => { S.cfg.approval = 'auto'; saveCfg(); syncApproval(); };
     $('c-man').onclick = () => { S.cfg.approval = 'manual'; saveCfg(); syncApproval(); };
     syncApproval();
