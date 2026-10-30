@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Eve</title>
+<link rel="stylesheet" href="ui/eve.css">
+</head>
+<body>
+<div id="app" class="eve">
+  <div id="titlebar">
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#ffd400" stroke="#8a6d00"/><circle cx="5.5" cy="6.5" r="1.2" fill="#000"/><circle cx="10.5" cy="6.5" r="1.2" fill="#000"/><path d="M4.5 10c1.8 2 5.2 2 7 0" stroke="#000" fill="none" stroke-width="1.2"/></svg>
+    <span id="title">Eve</span>
+  </div>
+  <div id="toolbar">
+    <button id="b-new">New Chat</button>
+    <button id="b-history">History</button>
+    <button id="b-branch">Branch</button>
+    <button id="b-buddies">Buddies</button>
+    <button id="b-settings" class="sp">Settings</button>
+  </div>
+  <main id="views">
+    <section id="view-chat" class="view">
+      <div id="strip"></div>
+      <div id="log" tabindex="0" role="log" aria-live="polite"></div>
+      <div id="split" role="separator" aria-orientation="horizontal" aria-label="Resize message box" title="Drag to resize, double-click to reset" tabindex="0"></div>
+      <div id="compose">
+        <div id="fmt">
+          <button id="f-b" aria-label="Bold" style="font-weight:bold">B</button>
+          <button id="f-i" aria-label="Italic" style="font-style:italic">I</button>
+          <button id="f-u" aria-label="Underline" style="text-decoration:underline">U</button>
+          <button id="f-attach" style="margin-left:6px">Attach</button>
+          <select id="f-skill" aria-label="Use a skill"><option value="">/ Skills</option></select>
+          <input id="filepick" type="file" multiple hidden>
+        </div>
+        <div id="chips"></div>
+        <textarea id="input" placeholder="Text… (paste or drop images)" aria-label="Message"></textarea>
+      </div>
+      <div id="controls">
+        <select id="c-model" aria-label="Model"><option value="sonnet">Claude Sonnet</option><option value="opus">Claude Opus</option><option value="haiku">Claude Haiku</option><option value="default">CLI default</option></select>
+        <span id="apv" role="group" aria-label="Approval: A auto-accept, M manual"><button id="c-auto" aria-pressed="true" title="Auto-accept: Eve proceeds without asking">A</button><button id="c-man" aria-pressed="false" title="Manual: ask before every change">M</button></span>
+        <select id="c-mode" aria-label="Security mode"><option value="adobe">Adobe Only</option><option value="project">Project Folder</option><option value="full">Full Access</option></select>
+        <button id="b-send" class="primary sp" style="padding:5px 22px">Send</button>
+      </div>
+    </section>
+    <section id="view-buddies" class="view" hidden></section>
+    <section id="view-history" class="view" hidden></section>
+    <section id="view-settings" class="view" hidden></section>
+  </main>
+  <div id="status"><span id="status-text"></span></div>
+  <div id="overlay" hidden></div>
+</div>
+<script src="lib/CSInterface.js"></script>
+<script src="ui/app.js"></script>
+</body>
+</html>
