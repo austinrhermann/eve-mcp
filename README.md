@@ -11,8 +11,8 @@ A chat-room style Claude panel for After Effects. Eve runs your own Claude Code 
 **A. Eve.zxp (easiest, no Terminal).** Download `Eve.zxp` from the latest [Release](../../releases/latest), install with the free [ZXP Installer](https://aescripts.com/learn/zxp-installer/) (drag it in on Mac, double-click on Windows), then restart After Effects.
 
 **B. One line.**
-- macOS (Terminal): `curl -fsSL https://raw.githubusercontent.com/OWNER/eve/main/scripts/install-mac.sh | bash`
-- Windows (PowerShell): `irm https://raw.githubusercontent.com/OWNER/eve/main/scripts/install-win.ps1 | iex`
+- macOS (Terminal): `curl -fsSL https://raw.githubusercontent.com/austinrhermann/eve-mcp/main/scripts/install-mac.sh | bash`
+- Windows (PowerShell): `irm https://raw.githubusercontent.com/austinrhermann/eve-mcp/main/scripts/install-win.ps1 | iex`
 
 Then open **Window > Extensions > Eve** (newer builds: **Extensions (Legacy) > Eve**).
 
@@ -20,9 +20,10 @@ Then open **Window > Extensions > Eve** (newer builds: **Extensions (Legacy) > E
 Do the same thing again. Both methods replace the old version and keep your settings and chats. The panel shows its version in Settings. Use one install method only, not both.
 
 ## For maintainers
-- Bump: `bash scripts/bump.sh patch|minor|major`, commit, tag `vX.Y.Z`, push the tag. GitHub Actions builds `Eve.zxp` and `eve-extension.zip`.
+- Release: `bash scripts/bump.sh patch|minor|major`, commit and push to `main`. GitHub Actions builds `Eve.zxp` and `eve-extension.zip` and publishes release `vX.Y.Z` (it can also be run by hand from the Actions tab).
+- `lib/CSInterface.js` (Adobe's, not committed) is downloaded automatically by the build and install scripts.
 - Local install from a checkout: `bash scripts/install-mac.sh` (add `--link` while developing) or double-click `scripts\install-win.bat`.
-- Before publishing, replace `OWNER/eve` in the README and `scripts/` with your repo (or set `EVE_REPO`).
+- The install scripts download from this repo's latest release. Fork it? Set `EVE_REPO=you/your-repo` or edit the default in `scripts/`.
 - Data (settings, chats, attachments): macOS `~/Library/Application Support/eve`, Windows `%APPDATA%\eve`.
 - Eve's tools run on a local server (127.0.0.1, random port, bearer token). Remote debugging: http://localhost:8099.
 - If your own AE MCP is also registered in Claude Code, switch off "Also load my other MCP servers" in Settings.

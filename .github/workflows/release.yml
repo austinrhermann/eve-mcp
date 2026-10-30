@@ -1,8 +1,11 @@
 name: Release
-# Push a tag like v0.2.0 (it must match the VERSION file) to publish a release with Eve.zxp and eve-extension.zip.
+# Push a new version to main (edit the VERSION file) or run this workflow by hand to publish a release
+# containing Eve.zxp and eve-extension.zip.
 on:
   push:
-    tags: ['v*']
+    branches: [main]
+    paths: ['VERSION']
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -13,8 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Tag must match VERSION
-        run: test "v$(cat VERSION)" = "${GITHUB_REF_NAME}"
+      - name: Read version
+        id: v
+        run: echo "ver=$(cat VERSION)" >> "$GITHUB_OUTPUT"
       - name: Build
         run: bash scripts/build.sh
       - name: Sign ZXP (self-signed)
@@ -28,6 +32,8 @@ jobs:
         run: npx --yes zxp-sign -i dist/stage -o dist/Eve.zxp
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.v.outputs.ver }}
+          name: Eve v${{ steps.v.outputs.ver }}
           generate_release_notes: true
           files: |
             dist/Eve.zxp

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Eve installer / updater for macOS.
 #   From a downloaded folder:  bash scripts/install-mac.sh          (add --link for a dev symlink)
-#   Straight from GitHub:      curl -fsSL https://raw.githubusercontent.com/OWNER/eve/main/scripts/install-mac.sh | bash
+#   Straight from GitHub:      curl -fsSL https://raw.githubusercontent.com/austinrhermann/eve-mcp/main/scripts/install-mac.sh | bash
 set -euo pipefail
-REPO="${EVE_REPO:-OWNER/eve}"
+REPO="${EVE_REPO:-austinrhermann/eve-mcp}"
 DEST="$HOME/Library/Application Support/Adobe/CEP/extensions/com.austin.eve"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
 SRC=""
@@ -15,6 +15,10 @@ if [ -z "$SRC" ]; then
   curl -fsSL "https://github.com/$REPO/releases/latest/download/eve-extension.zip" -o "$TMP/eve.zip"
   mkdir -p "$TMP/eve" && unzip -oq "$TMP/eve.zip" -d "$TMP/eve"
   SRC="$TMP/eve"
+fi
+
+if [ -d "$SRC/scripts" ] && [ ! -f "$SRC/lib/CSInterface.js" ]; then  # fetch Adobe's CSInterface.js for local checkouts
+  mkdir -p "$SRC/lib" && curl -fsSL https://raw.githubusercontent.com/Adobe-CEP/CEP-Resources/master/CEP_12.x/CSInterface.js -o "$SRC/lib/CSInterface.js"
 fi
 
 NEW="$(cat "$SRC/VERSION")"
