@@ -1,10 +1,13 @@
 # Eve
 
 A chat-room style Claude panel for After Effects. Eve runs your own Claude Code or Codex and gives it tools to read and edit your After Effects project. macOS and Windows.<BR>
-<img width="293" height="533" alt="eve-chat-light" src="https://github.com/user-attachments/assets/058194cd-db9f-408f-88e3-64847ae7096b" />
-<img width="293" height="533" alt="eve-chat-dark" src="https://github.com/user-attachments/assets/e603f5c5-466b-4459-ac8e-595a0a2d035e" />
-<img width="293" height="533" alt="eve-buddies-dark" src="https://github.com/user-attachments/assets/9b8f0c12-263c-49bc-85a4-f0f3b436ef6e" />
-
+<table>
+  <tr>
+    <td><img width="293" height="533" alt="eve-chat-light" src="https://github.com/user-attachments/assets/058194cd-db9f-408f-88e3-64847ae7096b" /></td>
+    <td><img width="293" height="533" alt="eve-chat-dark" src="https://github.com/user-attachments/assets/e603f5c5-466b-4459-ac8e-595a0a2d035e" /></td>
+    <td><img width="293" height="533" alt="eve-buddies-dark" src="https://github.com/user-attachments/assets/9b8f0c12-263c-49bc-85a4-f0f3b436ef6e" /></td>
+  </tr>
+</table>
 
 ## Before you start
 1. Install [Claude Code](https://claude.com/claude-code) and run `claude` once to sign in, or install Codex (`npm i -g @openai/codex`) and run `codex login`. Pick the provider in Settings.
@@ -12,7 +15,7 @@ A chat-room style Claude panel for After Effects. Eve runs your own Claude Code 
 3. Save your project (Eve works next to the .aep for checkpoints and project skills).
 
 ## Install (pick one)
-**A. Eve.zxp (easiest, no Terminal).** Download `Eve.zxp` from the latest [Release](../../releases/latest), install with the free [ZXP Installer](https://aescripts.com/learn/zxp-installer/) (drag it in on Mac, double-click on Windows), then restart After Effects.
+**A. Eve.zxp (easiest, no Terminal).** Download `Eve.zxp` from the latest [Release](../../releases/latest), install with the free [ZXP Installer](https://aescripts.com/learn/zxp-installer/) (drag it into the installer window).<BR>
 
 **B. One line.**
 - macOS (Terminal): `curl -fsSL https://raw.githubusercontent.com/austinrhermann/eve-mcp/main/scripts/install-mac.sh | bash`
@@ -24,7 +27,7 @@ Then open **Window > Extensions > Eve** (newer builds: **Extensions (Legacy) > E
 Do the same thing again. Both methods replace the old version and keep your settings and chats. The panel shows its version in Settings. Use one install method only, not both.
 
 ## For maintainers
-- Release: `bash scripts/bump.sh patch|minor|major`, commit and push to `main`. GitHub Actions builds `Eve.zxp` and `eve-extension.zip` and publishes release `vX.Y.Z` (it can also be run by hand from the Actions tab).
+- Release: `bash scripts/bump.sh patch|minor|major`, commit and push to `main`. GitHub Actions builds `Eve.zxp` and `eve-extension.zip` and publishes release `vX.Y.Z` (it can also be run by hand from GitHub Actions).
 - `lib/CSInterface.js` (Adobe's, not committed) is downloaded automatically by the build and install scripts.
 - Local install from a checkout: `bash scripts/install-mac.sh` (add `--link` while developing) or double-click `scripts\install-win.bat`.
 - The install scripts download from this repo's latest release. Fork it? Set `EVE_REPO=you/your-repo` or edit the default in `scripts/`.
@@ -34,4 +37,4 @@ Do the same thing again. Both methods replace the old version and keep your sett
 
 ## Providers
 - Claude Code: full feature set.
-- Codex: runs `codex exec` once per message. Branching is not available, and M (manual) only asks before scripts because Codex cannot prompt in headless mode. Security modes map to Codex sandboxes (Adobe Only = read-only, Project Folder = workspace-write, Full Access = no sandbox). Skills live in `~/.agents/skills`.
+- Codex: runs `codex exec` once per message. Branching is not available, and M (manual) only asks before scripts because Codex cannot prompt in headless mode. Security modes map to Codex sandboxes (read-only, workspace-write, network, and 
